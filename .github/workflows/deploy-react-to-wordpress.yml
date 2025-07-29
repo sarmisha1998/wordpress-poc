@@ -17,11 +17,12 @@ jobs:
         npm install
         npm run build
 
-    - name: Upload React build to WordPress via SFTP
-      uses: pressidium/lftp-action@v1
+    - name: Copy files to WordPress server via SCP
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.WP_HOST }}
-        user: ${{ secrets.WP_USER }}
-        pass: ${{ secrets.WP_PASS }}
-        localDir: ./build/
-        remoteDir: /var/www/html/wp-content/react/
+        username: ${{ secrets.WP_USER }}
+        password: ${{ secrets.WP_PASS }}
+        port: 22
+        source: "build/*"
+        target: "/var/www/html/wp-content/react"
