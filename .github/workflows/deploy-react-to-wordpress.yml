@@ -24,7 +24,5 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASS }}
         port: 22
-        script: |
-          echo "Connected to server!"
         source: "build/*"
         target: "/var/www/html/wp-content/react"
