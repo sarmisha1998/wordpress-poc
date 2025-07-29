@@ -17,12 +17,14 @@ jobs:
         npm install
         npm run build
 
-    - name: Copy files to WordPress server via SCP
+    - name: Copy files to WordPress server via SSK
       uses: appleboy/scp-action@v0.1.7
       with:
-        host: ${{ secrets.WP_HOST }}
-        username: ${{ secrets.WP_USER }}
-        password: ${{ secrets.WP_PASS }}
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASS }}
         port: 22
+        script: |
+          echo "Connected to server!"
         source: "build/*"
         target: "/var/www/html/wp-content/react"
