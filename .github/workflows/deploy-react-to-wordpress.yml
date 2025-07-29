@@ -1,0 +1,27 @@
+name: Deploy React to WordPress
+
+on:
+  push:
+    branches: [ react-frontend ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install Dependencies and Build
+      run: |
+        npm install
+        npm run build
+
+    - name: Upload React build to WordPress via SFTP
+      uses: pressidium/lftp-action@v1
+      with:
+        host: ${{ secrets.WP_HOST }}
+        user: ${{ secrets.WP_USER }}
+        pass: ${{ secrets.WP_PASS }}
+        localDir: ./build/
+        remoteDir: /var/www/html/wp-content/react/
